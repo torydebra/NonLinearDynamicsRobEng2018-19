@@ -10,7 +10,7 @@ addpath('Cl_ matcont4p2/MultilinearForms');
 addpath('Cl_ matcont4p2/Hopf');
 addpath('Cl_ matcont4p2/LimitCycle');
 
-params = [1.4, 1.9]; % p2 1.65 original
+params = [1.4, 1.65]; % p2 1.65 original
 
 eqPoint = fnReazStability(params(1), params(2))
 close all
@@ -53,8 +53,7 @@ disp(' ');
 disp(' ');
 
 %% Continuazione della biforcazione Hopf 
-%Trova una BT che è relativa alla seconda HOPF e LP trovato al passo
-%precedente
+%Trova una BT 
 disp(['Ricerca della curva di biforcazione di Hopf relativa al punto di equilibrio P3=', ...
     num2str(eqPoint(3,1)), ' ' ,  num2str(eqPoint(3,2)), ' ',  num2str(eqPoint(3,3))]);
 disp('DESCRIZIONE: Nel piano dei parametri (p1,p2) si parte dal punto (1.56, 1.65)');
