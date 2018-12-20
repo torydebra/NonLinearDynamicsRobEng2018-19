@@ -1,3 +1,5 @@
+%% file for odesolvers
+
 function xdot = fnReaz(t, x, a, b) 
 %% functio xdot = fnReaz(t, x, a, b)
 % Chimical reaction model

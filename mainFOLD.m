@@ -12,8 +12,8 @@ addpath('Cl_ matcont4p2/LimitCycle');
 
 params = [1.6, 0.4];
 
-eqPoint = fnReazStability(params(1), params(2));
-close all
+eqPoint = fnReazStability(params(1), params(2))
+
 
 
 %% Ricerca FOLD (backward of p1)
@@ -29,9 +29,9 @@ disp('Continuazione dell''equilibrio --> [xE,vE,sE,hE,fE]=cont(@equilibrium,x0,v
 disp(' ');
 opt=contset;
 
-opt=contset(opt,'MaxNumPoints',60); 
+opt=contset(opt,'MaxNumPoints',600); 
 opt=contset(opt,'Singularities',1);
-opt = contset(opt,'Backward', 1);
+opt = contset(opt,'Backward', 0);
 
 [xE,vE,sE,hE,fE]=cont(@equilibrium,x0,v0,opt);
 
@@ -39,7 +39,7 @@ disp(' ');
 disp(['COMMENTO: E'' stata trovata una biforcazione FOLD (LP) per p1 = ', num2str(xE(4,sE(2).index))] );
 disp('          (p2 e'' fissato a 0.4)');
 
-figure(3);
+figure;
 cpl(xE,vE,sE,[4 1]);
 xlabel('p_{1}')
 ylabel('x_{1}')
@@ -65,9 +65,9 @@ params(1) = xE(4,indice);
 % opzioni di continuazione
 opt = contset;
 opt = contset(opt, 'Singularities', 1);
-opt = contset(opt,'Backward', 0);
+opt = contset(opt,'Backward', 1);
 opt = contset(opt, 'MinStepSize', 1e-4);
-opt = contset(opt, 'MaxNumPoints', 150);
+opt = contset(opt, 'MaxNumPoints', 400);
 [xLP,vLP,sLP,hLP,fLP] = cont(@limitpoint, x0, v0, opt);
 disp(' ');
 disp(['COMMENTO: E'' stata trovata una biforcazione BT (BT) per p1,p2 = ', num2str(xLP(4,sLP(2).index)), ...

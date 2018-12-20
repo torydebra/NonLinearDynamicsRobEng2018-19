@@ -36,7 +36,7 @@ df3dx = diff(f3, X);
 df3dy = diff(f3, Y);
 df3dz = diff(f3, Z);
 
-J = [df1dx, df1dy, df1dz; df2dx, df2dy, df2dz; df3dx, df3dy, df3dz]
+J = [df1dx, df1dy, df1dz; df2dx, df2dy, df2dz; df3dx, df3dy, df3dz];
 
 Jpe = zeros (3, 3, nEqPoints);
 eigValues = zeros(nEqPoints, 3);

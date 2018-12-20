@@ -12,12 +12,10 @@ addpath('Cl_ matcont4p2/LimitCycle');
 
 params = [1.4707, 0.4];
 
-eqPoint = fnReazStability(params(1), params(2));
-close all
-
+eqPoint = fnReazStability(params(1), params(2))
 
 %% Ricerca FOLD (backward of p1)
-disp('PASSO 1: Ricerca della biforcazione di FOLD del punto di equilibrio P0=[0.64,-0.06,-0.28]');
+disp(['PASSO 1: Ricerca della biforcazione di FOLD del punto di equilibrio P0=', num2str(eqPoint(1,:))]);
 disp('DESCRIZIONE: Nel piano dei parametri (p1,p2) si parte dal punto [1.4707, 0.4]');
 disp('             e si diminuisce il parametro p1')
 disp('premi un tasto...'); pause; disp(' ');
@@ -29,7 +27,7 @@ disp('Continuazione dell''equilibrio --> [xE,vE,sE,hE,fE]=cont(@equilibrium,x0,v
 disp(' ');
 opt=contset;
 
-opt=contset(opt,'MaxNumPoints',600); %TODO ce ne un altra a 53 tipo
+opt=contset(opt,'MaxNumPoints',100); 
 opt=contset(opt,'Singularities',1);
 opt = contset(opt,'Backward', 1);
 
@@ -44,8 +42,9 @@ cpl(xE,vE,sE,[4,1,2]);
 xlabel('p_{1}')
 ylabel('x_{1}')
 zlabel('x_{2}')
-title('Continuazione dell''equilibrio P0=[0.64,-0.06,-0.28]')
+title(['Continuazione dell''equilibrio ',  num2str(eqPoint(1,:)), ', b fissato a 0.4'])
 grid;
+
 
 disp('premi un tasto...'); pause;
 disp(' ');

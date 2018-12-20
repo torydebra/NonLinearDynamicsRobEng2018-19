@@ -1,6 +1,6 @@
-clearvars
+clear all
 close all
-clc
+%clc
 
 addpath('Cl_ matcont4p2');
 addpath('Cl_ matcont4p2/Equilibrium');
@@ -12,9 +12,10 @@ addpath('Cl_ matcont4p2/LimitCycle');
 
 params = [1.4, 1.65];
 
-[eqPoint] = fnReazStability(params(1), params(2));
 
-eqPointChoosen = 2;
+[eqPoint] = fnReazStability(params(1), params(2))
+
+eqPointChoosen =2 ;
 
 %% ricerca la biforcazione (hopf)
 disp(['PASSO 1: Ricerca della biforcazione hopf del punto di equilibrio P0 = ',num2str(eqPoint(eqPointChoosen,:))]);
@@ -95,7 +96,7 @@ disp(' ');
 disp(' ');
 
 %% continua il ciclo originato dalla Hopf rispetto a p1
-disp(['PASSO 3: Continuazione del ciclo generato dalla biforcazione di Hopf del punto di equilibrio P0 = ',num2str(eqPoint(eqPointChoosen,:))]);
+disp(['PASSO 3: Continuazione del ciclo generato dalla biforcazione di Hopf del punto di equilibrio P = ',num2str(eqPoint(eqPointChoosen,:))]);
 disp(['DESCRIZIONE: Nel piano dei parametri (p1,p2) si parte dal punto (',num2str(params(1)),',',num2str(params(2)),') localizzato al PASSO 1']);
 disp('             e si aumenta il parametro p1')
 disp('premi un tasto...'); pause;
@@ -106,10 +107,10 @@ params(1)=xE(4,sE(4).index);
 disp(' ');
 disp('Calcolo del ciclo iniziale --> [x0,v0]=init_H_LC@reaz,x1,params,1,0.0001,20,4);')
 
-[x0,v0]=init_H_LC(@reaz,x1,params',2,0.0001,20,4);
-opt=contset(opt,'Singularities',0);
-opt = contset(opt,'MaxNumPoints',100);
-opt = contset(opt,'Backward',1);
+[x0,v0]=init_H_LC(@reaz,x1,params',1,0.0001,20,4);
+opt=contset(opt,'Singularities',1);
+opt = contset(opt,'MaxNumPoints',150);
+opt = contset(opt,'Backward',0);
 
 disp('Continuazione del ciclo --> [xlc,vlc,slc,hlc,flc]=cont(@limitcycle,x0,v0,opt)')
 disp(' ');
@@ -117,17 +118,40 @@ disp(' ');
 [xlc,vlc,slc,hlc,flc]=cont(@limitcycle,x0,v0,opt);
 
 disp(' ');
-disp(['COMMENTO: NON e'' stata trovata alcuna biforcazione del ciclo e l''analisi si interrompe per (p1,p2) = (',num2str(params(1)),',',num2str(params(2)),')']);
+disp(['COMMENTO: ASFAAAAAAAAAAAAAAAAAAAAAaaa stata trovata alcuna biforcazione del ciclo e l''analisi si interrompe per (p1,p2) = (',num2str(params(1)),',',num2str(params(2)),')']);
 disp('premi un tasto...'); pause;
 disp(' ');
 
 %   grafico
 figure;
-plotcycle(xlc,vlc,slc,[size(xlc,1) 1 3]);
+plotcycle(xlc,vlc,slc,[size(xlc,1) 1 2]);
 title('Continuazione del ciclo al variare di $p_1$.','Interpreter','latex');
 xlabel('$p_1$','Interpreter','latex');
 ylabel('$x_1$','Interpreter','latex');
 zlabel('$x_2$','Interpreter','latex');
 
-disp('premi un tasto...'); pause;
-disp(' ');
+figure;
+plot(xlc(end,:),xlc(end-1,:),'k','LineWidth',2);
+grid on;
+xlabel('rho'); ylabel('T');
+title('Periodo del ciclo');
+
+% figure;
+% plotcycle(xlc,vlc,slc,[size(xlc,1) 1 3]);
+% title('Continuazione del ciclo al variare di $p_1$.','Interpreter','latex');
+% xlabel('$p_1$','Interpreter','latex');
+% ylabel('$x_1$','Interpreter','latex');
+% zlabel('$x_3$','Interpreter','latex');
+
+[x0,v0]=init_LPC_LPC(@reaz, xlc, slc(2), [1 2], 30, 4);
+opt=contset(opt,'MaxNumPoints',100);
+opt=contset(opt,'Singularities',0);
+opt = contset(opt, 'MinStepSize', 1e-5);
+opt = contset(opt,'Backward',0);
+[x3,v3,s3,h3,f3]=cont(@limitpointcycle,x0,v0,opt);
+figure
+plotcycle(x3,v3,s3, [size(x3,1) 1 2]);
+title('');
+xlabel('$p_1$','Interpreter','latex');
+ylabel('$x_1$','Interpreter','latex');
+zlabel('$x_2$','Interpreter','latex');

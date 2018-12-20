@@ -1,3 +1,4 @@
+%% file for matcont functions
 function out = reaz
 %
 % Standard ode file of reaction 
@@ -12,21 +13,17 @@ out{7} = [];
 out{8} = [];
 out{9} = [];
 
-
-function dfdt = fun_eval(t,x,a,b)
-f1 = 5*x(3).^2 - 2*x(1).^2 - 10*x(1)*x(2);
-f2 = a*x(3) - 0.1*x(2) - 10*x(1)*x(2);
-f3 = - 0.0675*x(3) - b*0.0675*(1-x(1)-x(2)-x(3));
-dfdt = [f1; f2; f3];
-
-
-
 function [tspan,y0,options] = init
 tspan = [0; 10];
 y0 = [0;0];
 handles = feval(@reaz);
 options = odeset('Jacobian',handles(3),'JacobianP',handles(4));
 
+function dfdt = fun_eval(t,x,a,b)
+f1 = 5*x(3).^2 - 2*x(1).^2 - 10*x(1)*x(2);
+f2 = a*x(3) - 0.1*x(2) - 10*x(1)*x(2);
+f3 = - 0.0675*x(3) - b*0.0675*(1-x(1)-x(2)-x(3));
+dfdt = [f1; f2; f3];
 
 function jac = jacobian(t,x,a,b)
 df1dxyz = [-4*x(1)-10*x(2),    -10*x(1),    10*x(3)];

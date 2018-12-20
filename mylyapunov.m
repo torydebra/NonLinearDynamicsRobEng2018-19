@@ -1,4 +1,4 @@
-function [Texp,Lexp]=lyapunov(n,rhs_ext_fcn,fcn_integrator,tstart,stept,tend,ystart,ioutp,par);
+function [Texp,Lexp]=mylyapunov(n,rhs_ext_fcn,fcn_integrator,tstart,stept,tend,ystart,ioutp,par);
 %
 %    Lyapunov exponent calculation for ODE-system.
 %
