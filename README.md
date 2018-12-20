@@ -1,5 +1,5 @@
 # NonLinearDynamicsRobEng2018-19
-Analysis of a parametrized chemical non linear system in Matlab for NonLinear Dynamics of Robotics Engineering 2018/19.
+Analysis of a parametrized chemical non linear system in Matlab with MatCont for NonLinear Dynamics of Robotics Engineering 2018/19.
 
 FINAL folder is the final version (for MATLAB 2018b and Cl_matcont4p2)
 
